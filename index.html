@@ -30,18 +30,19 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: radial-gradient(circle at top left, #e9f0ff, transparent 34rem), var(--bg);
       color: var(--ink);
     }
 
     .app {
-      min-height: 100vh;
+      height: 100vh;
       display: grid;
       grid-template-rows: auto minmax(0, 1fr);
-      gap: 14px;
-      padding: 16px;
+      gap: 8px;
+      padding: 8px;
     }
 
     header {
@@ -54,19 +55,19 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 14px 18px;
+      padding: 9px 14px;
     }
 
     .title h1 {
       margin: 0;
-      font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+      font-size: clamp(1rem, 1.55vw, 1.42rem);
       line-height: 1.15;
     }
 
     .title p {
-      margin: 4px 0 0;
+      margin: 2px 0 0;
       color: var(--muted);
-      font-size: 0.94rem;
+      font-size: 0.84rem;
     }
 
     .stats {
@@ -80,8 +81,8 @@
       border: 1px solid var(--line);
       background: #fff;
       border-radius: 999px;
-      padding: 7px 10px;
-      font-size: 0.88rem;
+      padding: 5px 8px;
+      font-size: 0.8rem;
       color: var(--muted);
       white-space: nowrap;
     }
@@ -90,10 +91,11 @@
 
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
-      grid-template-rows: minmax(440px, 2fr) minmax(250px, 1fr);
-      gap: 14px;
+      grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
+      grid-template-rows: minmax(0, 2.05fr) minmax(180px, 0.95fr);
+      gap: 8px;
       min-height: 0;
+      height: 100%;
     }
 
     .panel {
@@ -107,10 +109,10 @@
 
     .triangle-panel {
       position: relative;
-      padding: 16px;
+      padding: 10px;
       display: grid;
       grid-template-rows: auto minmax(0, 1fr) auto;
-      gap: 10px;
+      gap: 7px;
     }
 
     .panel-top {
@@ -122,13 +124,13 @@
 
     .panel-title {
       margin: 0;
-      font-size: 1.05rem;
+      font-size: 0.94rem;
     }
 
     .hint-line {
-      margin: 3px 0 0;
+      margin: 2px 0 0;
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
 
     .legend {
@@ -171,17 +173,17 @@
     svg { max-width: 100%; max-height: 100%; }
 
     .message {
-      min-height: 44px;
+      min-height: 34px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 10px 12px;
-      border-radius: 16px;
+      padding: 7px 10px;
+      border-radius: 14px;
       background: #f8fafc;
       border: 1px solid var(--line);
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.84rem;
     }
 
     .message.good { background: #ecfdf3; border-color: #bbf7d0; color: #166534; }
@@ -191,8 +193,8 @@
     .answers-panel {
       display: grid;
       grid-template-rows: auto minmax(0, 1fr) auto;
-      padding: 16px;
-      gap: 12px;
+      padding: 10px;
+      gap: 8px;
     }
 
     .answers-scroll {
@@ -202,22 +204,22 @@
 
     .side-task {
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 14px;
       background: var(--soft);
-      padding: 12px;
-      margin-bottom: 12px;
+      padding: 8px;
+      margin-bottom: 8px;
     }
 
     .side-task h3 {
-      margin: 0 0 6px;
-      font-size: 1rem;
+      margin: 0 0 4px;
+      font-size: 0.88rem;
     }
 
     .formula-note {
-      margin: 6px 0;
+      margin: 4px 0;
       color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.35;
+      font-size: 0.78rem;
+      line-height: 1.25;
     }
 
     .side-input-row {
@@ -228,8 +230,8 @@
     }
 
     .side-input-row input {
-      width: 90px;
-      height: 38px;
+      width: 76px;
+      height: 30px;
       border: 1px solid var(--line);
       border-radius: 12px;
       padding: 8px;
@@ -241,9 +243,9 @@
 
     .answer-row {
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 10px;
-      margin-bottom: 10px;
+      border-radius: 14px;
+      padding: 7px 8px;
+      margin-bottom: 7px;
       background: #fff;
     }
 
@@ -262,13 +264,14 @@
       justify-content: space-between;
       align-items: center;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       font-weight: 800;
+      font-size: 0.86rem;
     }
 
     .mini-explain {
       color: var(--muted);
-      font-size: 0.82rem;
+      font-size: 0.72rem;
       font-weight: 500;
       text-align: right;
     }
@@ -282,18 +285,18 @@
 
     .fraction {
       display: inline-grid;
-      grid-template-rows: 32px 2px 32px;
+      grid-template-rows: 24px 2px 24px;
       align-items: center;
-      min-width: 74px;
+      min-width: 58px;
     }
 
     .fraction input {
-      width: 74px;
-      height: 32px;
+      width: 58px;
+      height: 24px;
       border: 1px solid var(--line);
       border-radius: 10px;
       text-align: center;
-      font-size: 0.98rem;
+      font-size: 0.84rem;
       font-weight: 700;
       background: #fff;
     }
@@ -317,7 +320,7 @@
 
     .buttons {
       display: flex;
-      gap: 8px;
+      gap: 7px;
       flex-wrap: wrap;
       justify-content: flex-end;
       align-items: center;
@@ -326,8 +329,8 @@
     button {
       appearance: none;
       border: 0;
-      border-radius: 14px;
-      padding: 10px 14px;
+      border-radius: 13px;
+      padding: 8px 12px;
       font-weight: 800;
       cursor: pointer;
       background: var(--accent);
@@ -355,10 +358,10 @@
 
     .graphs-panel {
       grid-column: 1 / -1;
-      padding: 14px;
+      padding: 10px;
       display: grid;
       grid-template-rows: auto minmax(0, 1fr);
-      gap: 10px;
+      gap: 7px;
     }
 
     .graphs-head {
@@ -371,15 +374,15 @@
     .graphs-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
+      gap: 8px;
       min-height: 0;
     }
 
     .graph-card {
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 16px;
       background: #fbfcff;
-      padding: 8px;
+      padding: 6px;
       min-width: 0;
     }
 
@@ -388,9 +391,9 @@
       justify-content: space-between;
       align-items: center;
       gap: 8px;
-      margin: 0 0 4px;
+      margin: 0 0 2px;
       font-weight: 800;
-      font-size: 0.92rem;
+      font-size: 0.84rem;
     }
 
     .graph-title small {
@@ -501,15 +504,15 @@
         <div class="graphs-grid">
           <div class="graph-card">
             <p class="graph-title">sin(x) <small>oś X: stopnie</small></p>
-            <svg id="sinSvg" viewBox="0 0 420 190"></svg>
+            <svg id="sinSvg" viewBox="0 0 420 150"></svg>
           </div>
           <div class="graph-card">
             <p class="graph-title">cos(x) <small>oś X: stopnie</small></p>
-            <svg id="cosSvg" viewBox="0 0 420 190"></svg>
+            <svg id="cosSvg" viewBox="0 0 420 150"></svg>
           </div>
           <div class="graph-card">
             <p class="graph-title">tg(x) <small>wartości przycięte do ±4</small></p>
-            <svg id="tanSvg" viewBox="0 0 420 190"></svg>
+            <svg id="tanSvg" viewBox="0 0 420 150"></svg>
           </div>
         </div>
       </section>
@@ -727,8 +730,8 @@
         <line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}" stroke="${sideColor('b')}" stroke-width="${sideWidth('b')}" stroke-linecap="round" />
         <line x1="${B.x}" y1="${B.y}" x2="${C.x}" y2="${C.y}" stroke="${sideColor('c')}" stroke-width="${sideWidth('c')}" stroke-linecap="round" />
 
-        <path d="M ${B.x - 55} ${B.y} A 55 55 0 0 0 ${B.x - 43} ${B.y - 34}" fill="none" stroke="var(--alpha)" stroke-width="3" />
-        <path d="M ${C.x} ${C.y + 55} A 55 55 0 0 1 ${C.x + 39} ${C.y + 39}" fill="none" stroke="var(--beta)" stroke-width="3" />
+        <path d="M ${B.x - 55} ${B.y} A 55 55 0 0 1 ${B.x - 43} ${B.y - 34}" fill="none" stroke="var(--alpha)" stroke-width="3" stroke-linecap="round" />
+        <path d="M ${C.x} ${C.y + 55} A 55 55 0 0 0 ${C.x + 39} ${C.y + 39}" fill="none" stroke="var(--beta)" stroke-width="3" stroke-linecap="round" />
         <polyline points="${A.x},${A.y - 34} ${A.x + 34},${A.y - 34} ${A.x + 34},${A.y}" fill="none" stroke="var(--gamma)" stroke-width="3" />
 
         ${sideLabel('a', A.x - 38, (A.y + C.y) / 2)}
@@ -948,7 +951,7 @@
     }
 
     function graphPath(fn, yMin, yMax, breakFn = null) {
-      const w = 420, h = 190, pad = 28;
+      const w = 420, h = 150, pad = 24;
       const xMap = deg => pad + (deg + 30) / 420 * (w - 2 * pad);
       const yMap = y => pad + (yMax - y) / (yMax - yMin) * (h - 2 * pad);
       const segments = [];
@@ -969,7 +972,7 @@
     }
 
     function renderSingleGraph(svg, name, fn, yMin, yMax, options = {}) {
-      const w = 420, h = 190, pad = 28;
+      const w = 420, h = 150, pad = 24;
       const xMap = deg => pad + (deg + 30) / 420 * (w - 2 * pad);
       const yMap = y => pad + (yMax - y) / (yMax - yMin) * (h - 2 * pad);
       const xAxisY = yMap(0);
