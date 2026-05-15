@@ -24,7 +24,7 @@ function render(){
  els.answersIntro.textContent=msgs.intro;
 }
 function clearBad(){document.querySelectorAll('.invalid input').forEach(i=>i.value='');}
-function newTask(){state.task=buildTask();state.attempt=0;state.pythSolved=false;els.nextBtn.hidden=true;render();msg(msgs.intro);}
+function newTask(){state.task=buildTask();state.attempt=0;state.pythSolved=false;state.showColorHints=false;els.nextBtn.hidden=true;render();msg(msgs.intro);}
 
 els.sqrtBtn.onmousedown=(e)=>e.preventDefault();
 els.sqrtBtn.onclick=()=>{const i=state.focusedInput;if(!i)return;const s=i.selectionStart??i.value.length;const e=i.selectionEnd??i.value.length;i.value=i.value.slice(0,s)+'√'+i.value.slice(e);i.focus();i.setSelectionRange(s+1,s+1);};
@@ -33,7 +33,7 @@ els.checkBtn.onclick=()=>{
  if(res.ok&&state.mode==='pyth'&&state.pythSolved&&els.answers.querySelector('#missingSide')){render();msg(msgs.pythOk);return;}
  if(res.rows.length) paintResults(res.rows);
  if(res.ok){state.session.solved++;els.nextBtn.hidden=false;update();msg(msgs.ok);return;}
- state.attempt++; if(state.attempt===1)msg(msgs.wrong1); else if(state.attempt===2){clearBad(); msg(msgs.wrong2);} else msg(msgs.color);
+ state.attempt++; if(state.attempt===1)msg(msgs.wrong1); else if(state.attempt===2){clearBad(); msg(msgs.wrong2);} else {state.showColorHints=true; renderAnswers(els.answers); wireFocus(els.answers); msg(msgs.color);} 
 };
 els.nextBtn.onclick=()=>newTask();
 newTask();

@@ -15,7 +15,7 @@ function fitToView(points,margin=52){
 
 export function renderTriangle(el,onSideClick){
  const t=state.task;
- let A={x:0,y:1},B={x:t.b,y:1},C={x:0,y:1-t.a}; // C is right angle
+ let C={x:0,y:0},A={x:0,y:t.b},B={x:t.a,y:0}; // C is right angle, AC=b, BC=a, AB=c
  if(state.mode==='random'){
    const cent={x:(A.x+B.x+C.x)/3,y:(A.y+B.y+C.y)/3};
    const ang=Math.random()*Math.PI*2;
