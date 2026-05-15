@@ -1,1 +1,66 @@
-<!doctype html><html lang='pl'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width, initial-scale=1'/><title>Trener trygonometrii</title><link rel='stylesheet' href='styles.css'/></head><body><div class='app'><header><div class='title'><h1>Trener trygonometrii</h1><p>Rozpoznaj boki względem kąta: przeciwległy, przyległy, przeciwprostokątna.</p></div><div class='stats' id='stats'></div></header><div class='mode-menu global' id='modeMenu'></div><main class='layout'><section class='panel triangle-panel'><div class='panel-top'><h2 class='panel-title' id='taskTitle'>Trójkąt prostokątny</h2><p class='hint-line' id='taskSubtitle'>— uzupełnij wartości funkcji dla kątów ostrych α i β.</p></div><div class='triangle-wrap'><svg id='triangleSvg' viewBox='0 0 680 440'></svg></div><div class='message' id='message'></div></section><section class='panel answers-panel'><div><h2 class='panel-title'>Odpowiedzi</h2></div><div class='answers-scroll' id='answers'></div><div class='buttons'><button class='secondary' id='sqrtBtn'>√</button><button id='checkBtn'>Sprawdź</button><button class='good' id='nextBtn' hidden>Następne zadanie</button></div></section><section class='panel graphs-panel'><div class='graphs-grid'><div class='graph-card'><p class='graph-title'>sin(x)</p><svg id='sinSvg' viewBox='0 0 420 150'></svg></div><div class='graph-card'><p class='graph-title'>cos(x)</p><svg id='cosSvg' viewBox='0 0 420 150'></svg></div><div class='graph-card'><p class='graph-title'>tg(x)</p><svg id='tanSvg' viewBox='0 0 420 150'></svg></div></div></section></main></div><script type='module' src='src/app.js'></script></body></html>
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trener trygonometrii</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <div class="title">
+          <h1>Trener trygonometrii</h1>
+          <p>Rozpoznaj boki względem kąta: przeciwległy, przyległy, przeciwprostokątna.</p>
+        </div>
+        <div class="stats" id="stats"></div>
+      </header>
+
+      <div class="mode-menu global" id="modeMenu"></div>
+
+      <main class="layout">
+        <section class="panel triangle-panel">
+          <div class="panel-top">
+            <h2 class="panel-title" id="taskTitle">Trójkąt prostokątny</h2>
+            <p class="hint-line" id="taskSubtitle">— uzupełnij wartości funkcji dla kątów ostrych α i β.</p>
+          </div>
+          <div class="triangle-wrap">
+            <svg id="triangleSvg" viewBox="0 0 680 440" role="img" aria-label="Trójkąt prostokątny"></svg>
+          </div>
+          <div class="message" id="message"></div>
+        </section>
+
+        <section class="panel answers-panel">
+          <div>
+            <h2 class="panel-title">Odpowiedzi</h2>
+          </div>
+          <div class="answers-scroll" id="answers"></div>
+          <div class="buttons">
+            <button class="secondary" id="sqrtBtn" type="button">√</button>
+            <button id="checkBtn" type="button">Sprawdź</button>
+            <button class="good" id="nextBtn" type="button" hidden>Następne zadanie</button>
+          </div>
+        </section>
+
+        <section class="panel graphs-panel">
+          <div class="graphs-grid">
+            <div class="graph-card">
+              <p class="graph-title">sin(x)</p>
+              <svg id="sinSvg" viewBox="0 0 420 150"></svg>
+            </div>
+            <div class="graph-card">
+              <p class="graph-title">cos(x)</p>
+              <svg id="cosSvg" viewBox="0 0 420 150"></svg>
+            </div>
+            <div class="graph-card">
+              <p class="graph-title">tg(x)</p>
+              <svg id="tanSvg" viewBox="0 0 420 150"></svg>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>
