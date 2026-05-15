@@ -1,15 +1,31 @@
 import {parseExpr,approxEq,simplify} from './fractions.js';
 
-function simplificationPlan(n,d){
-  if(Number.isInteger(n)&&Number.isInteger(d)){
+function isInt(x){return Number.isInteger(x);}
+
+export function simplificationPlan(n,d){
+  if(approxEq(d,0)) return {mode:'none'};
+
+  if(isInt(n)&&isInt(d)){
     const s=simplify(n,d);
-    if(!s.changed) return {mode:'none'};
-    if(s.den===1) return {mode:'single',value:s.num};
-    return {mode:'fraction',num:s.num,den:s.den};
+    if(s.den===1 && !approxEq(d,1)) return {mode:'single',value:s.num};
+    if(s.changed) return {mode:'fraction',num:s.num,den:s.den};
+    return {mode:'none'};
   }
+
   if(approxEq(d,1)) return {mode:'single',value:n};
-  if(approxEq(d,Math.sqrt(3))&&approxEq(n,1)) return {mode:'fraction',num:Math.sqrt(3),den:3};
-  if(approxEq(d,Math.SQRT2)&&approxEq(n,1)) return {mode:'none'}; // 1/√2 accepted as √2/2 equivalent
+
+  // rationalization patterns used in special triangles
+  if(approxEq(d,Math.SQRT2)){
+    const num=n*Math.SQRT2;
+    const den=2;
+    if(approxEq(num/den,n/d)) return approxEq(den,1)?{mode:'single',value:num}:{mode:'fraction',num,den};
+  }
+  if(approxEq(d,Math.sqrt(3))){
+    const num=n*Math.sqrt(3);
+    const den=3;
+    if(approxEq(num/den,n/d)) return approxEq(den,1)?{mode:'single',value:num}:{mode:'fraction',num,den};
+  }
+
   return {mode:'none'};
 }
 

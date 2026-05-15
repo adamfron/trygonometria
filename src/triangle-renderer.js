@@ -22,17 +22,18 @@ export function renderTriangle(el,onSideClick){
 
  const sideLabel=(id,p,q,val,col,off=20)=>{const m={x:(p.x+q.x)/2,y:(p.y+q.y)/2}; let n=norm({x:-(q.y-p.y),y:q.x-p.x}); if(dot(n,sub(G,m))>0)n=mul(n,-1); const lp=add(m,mul(n,off)); const ax=clamp(lp.x,M+4,W-M-4), ay=clamp(lp.y,M+12,H-M); return `<line data-side='${id}' class='side-hot' x1='${p.x}' y1='${p.y}' x2='${q.x}' y2='${q.y}' stroke='${col}' stroke-width='5'/><text text-anchor='${anchorFor(ax,W/2)}' x='${ax}' y='${ay}'>${id}${val?`=${val}`:''}</text>`;};
  const vertexLabel=(name,p)=>{const v=norm(sub(p,G));const lp=add(p,mul(v,22));const ax=clamp(lp.x,M+4,W-M-4), ay=clamp(lp.y,M+12,H-M);return `<text text-anchor='${anchorFor(ax,W/2)}' x='${ax}' y='${ay}'>${name}</text>`;};
- const angleLabel=(v,p1,p2,arcR,text,d=14,color='var(--alpha)')=>{const u1=unitVector(v,p1),u2=unitVector(v,p2);const bis=norm(add(u1,u2));const lp=add(v,mul(bis,arcR+d));const ax=clamp(lp.x,M+4,W-M-4), ay=clamp(lp.y,M+12,H-M);return `<text text-anchor='${anchorFor(ax,W/2)}' x='${ax}' y='${ay}' fill='${color}'>${text}</text>`;};
+ const getInteriorAngleLabelPosition=(v,p1,p2,arcR,extra=16)=>{const u1=unitVector(v,p1),u2=unitVector(v,p2);const bis=norm(add(u1,u2));const lp=add(v,mul(bis,arcR+extra));return {x:clamp(lp.x,M+4,W-M-4),y:clamp(lp.y,M+12,H-M)};};
+ const angleLabel=(v,p1,p2,arcR,text,d=16,color='var(--alpha)')=>{const p=getInteriorAngleLabelPosition(v,p1,p2,arcR,d);return `<text text-anchor='${anchorFor(p.x,W/2)}' x='${p.x}' y='${p.y}' fill='${color}'>${text}</text>`;};
 
  const arcR=24, aArc=drawInteriorArc(A,C,B,arcR), bArc=drawInteriorArc(B,A,C,arcR);
  const uCA=unitVector(C,A),uCB=unitVector(C,B),sq=18,p1=add(C,mul(uCA,sq)),p2=add(C,mul(uCB,sq)),p3=add(p1,mul(uCB,sq));
  const toG=norm(sub(G,C));
  const perp={x:-toG.y,y:toG.x};
- const gPos=add(add(C,mul(toG,30)),mul(perp,6));
+ const gPos=add(add(C,mul(toG,34)),mul(perp,4));
  const gammaLabel=`<text text-anchor='${anchorFor(clamp(gPos.x,M+4,W-M-4),W/2)}' x='${clamp(gPos.x,M+4,W-M-4)}' y='${clamp(gPos.y,M+12,H-M)}' fill='var(--gamma)'>γ / 90°</text>`;
 
 
- el.innerHTML=`${vertexLabel('A',A)}${vertexLabel('B',B)}${vertexLabel('C',C)}${sideLabel('a',B,C,sideVal('a'),'var(--side-a)')}${sideLabel('b',A,C,sideVal('b'),'var(--side-b)')}${sideLabel('c',A,B,sideVal('c'),'var(--side-c)',24)}<path d='${aArc}' stroke='var(--alpha)' stroke-width='2.2' fill='none'/>${angleLabel(A,C,B,arcR,'α',14,'var(--alpha)')}<path d='${bArc}' stroke='var(--beta)' stroke-width='2.2' fill='none'/>${angleLabel(B,A,C,arcR,'β',14,'var(--beta)')}<polyline points='${p1.x},${p1.y} ${p3.x},${p3.y} ${p2.x},${p2.y}' fill='none' stroke='var(--gamma)' stroke-width='2'/>${gammaLabel}`;
+ el.innerHTML=`${vertexLabel('A',A)}${vertexLabel('B',B)}${vertexLabel('C',C)}${sideLabel('a',B,C,sideVal('a'),'var(--side-a)')}${sideLabel('b',A,C,sideVal('b'),'var(--side-b)')}${sideLabel('c',A,B,sideVal('c'),'var(--side-c)',24)}<path d='${aArc}' stroke='var(--alpha)' stroke-width='2.2' fill='none'/>${angleLabel(A,C,B,arcR,'α',18,'var(--alpha)')}<path d='${bArc}' stroke='var(--beta)' stroke-width='2.2' fill='none'/>${angleLabel(B,A,C,arcR,'β',18,'var(--beta)')}<polyline points='${p1.x},${p1.y} ${p3.x},${p3.y} ${p2.x},${p2.y}' fill='none' stroke='var(--gamma)' stroke-width='2'/>${gammaLabel}`;
 
  el.querySelectorAll('[data-side]').forEach(n=>{n.onmouseenter=()=>n.classList.add('side-hover');n.onmouseleave=()=>n.classList.remove('side-hover');n.onclick=()=>onSideClick(n.dataset.side);});
 }
