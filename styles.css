@@ -16,3 +16,5 @@ input{height:28px;border:1px solid var(--line);border-radius:10px;text-align:cen
 .answer-row.show-hints input[data-side="a"]{border-color:var(--side-a);box-shadow:0 0 0 1px color-mix(in srgb,var(--side-a) 35%,white)}
 .answer-row.show-hints input[data-side="b"]{border-color:var(--side-b);box-shadow:0 0 0 1px color-mix(in srgb,var(--side-b) 35%,white)}
 .answer-row.show-hints input[data-side="c"]{border-color:var(--side-c);box-shadow:0 0 0 1px color-mix(in srgb,var(--side-c) 35%,white)}
+
+.single-eq{width:92px;vertical-align:middle;margin-left:4px}
