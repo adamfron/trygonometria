@@ -1,4 +1,4 @@
-const W=420,H=150,l=32,r=12,t=16,b=20;
+const W=420,H=150,l=32,r=12,t=12,b=24;
 const xMin=-30,xMax=390,yMin=-1.3,yMax=1.3,yMinTan=-10,yMaxTan=10;
 const pxX=d=>l+((d-xMin)/(xMax-xMin))*(W-l-r);
 const pxY=(v,min,max)=>t+((max-v)/(max-min))*(H-t-b);
