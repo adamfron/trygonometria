@@ -1,0 +1,2 @@
+export const rotate=(p,ang,c)=>({x:c.x+(p.x-c.x)*Math.cos(ang)-(p.y-c.y)*Math.sin(ang),y:c.y+(p.x-c.x)*Math.sin(ang)+(p.y-c.y)*Math.cos(ang)});
+export function arcPath(v,o,r){const a1=Math.atan2(v[0].y-o.y,v[0].x-o.x),a2=Math.atan2(v[1].y-o.y,v[1].x-o.x);let d=a2-a1;while(d<=0)d+=Math.PI*2;const end={x:o.x+r*Math.cos(a1+d),y:o.y+r*Math.sin(a1+d)};return `M ${o.x+r*Math.cos(a1)} ${o.y+r*Math.sin(a1)} A ${r} ${r} 0 0 1 ${end.x} ${end.y}`;}
