@@ -14,7 +14,7 @@ function render(){
  update();
  renderModes(els.modeMenu,m=>{state.mode=m;newTask();});
  renderTriangle(els.triangleSvg,side=>{
-  const i=state.focusedInput; if(!i||i.id==='missingSide'||!/-r[nd]$|-s[nd]$/.test(i.id)) return;
+  const i=state.focusedInput; if(state.mode==='relation'||!i||i.id==='missingSide'||!/-r[nd]$|-s[nd]$/.test(i.id)) return;
   i.value+=symbolic(state.task[side]); i.focus();
  });
  renderAnswers(els.answers); wireFocus(els.answers);
