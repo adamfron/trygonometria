@@ -12,7 +12,7 @@ export function renderAnswers(el){
  if(state.mode==='pyth'&&!state.pythSolved) html+=`<div class='answer-row'><b>Brakujący bok ${t.hidden}</b> <input id='missingSide'></div><div>Wyprowadzenie: ${t.hidden==='c'?'c=√(a²+b²)':t.hidden==='a'?'a=√(c²-b²)':'b=√(c²-a²)'}</div>`;
  if(state.mode!=='pyth'||state.pythSolved) html+=rows(t).map(r=>{
    const left=`<span class='fraction'><input data-side='${sideMap[r.k][0]}' id='${r.k}-rn'><span class='bar'></span><input data-side='${sideMap[r.k][1]}' id='${r.k}-rd'></span>`;
-   const right=r.s.mode==='fraction'?`=<span class='fraction'><input data-side='${sideMap[r.k][0]}' id='${r.k}-sn'><span class='bar'></span><input data-side='${sideMap[r.k][1]}' id='${r.k}-sd'></span>`:r.s.mode==='single'?`=<input class='single-eq' id='${r.k}-s1'>`:'';
+   const right=r.s.mode==='fraction'?`<span class='eq-mark'>=</span><span class='fraction'><input data-side='${sideMap[r.k][0]}' id='${r.k}-sn'><span class='bar'></span><input data-side='${sideMap[r.k][1]}' id='${r.k}-sd'></span>`:r.s.mode==='single'?`<span class='eq-mark'>=</span><span class='simplified-single'><input class='single-eq' id='${r.k}-s1'></span>`:'';
    return `<div class='answer-row ${state.showColorHints?'show-hints':''}' data-row='${r.k}'><b>${labels[r.k]}</b> ${left} ${right}</div>`;
  }).join('');
  el.innerHTML=html;

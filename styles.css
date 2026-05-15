@@ -18,3 +18,7 @@ input{height:28px;border:1px solid var(--line);border-radius:10px;text-align:cen
 .answer-row.show-hints input[data-side="c"]{border-color:var(--side-c);box-shadow:0 0 0 1px color-mix(in srgb,var(--side-c) 35%,white)}
 
 .single-eq{width:92px;vertical-align:middle;margin-left:4px}
+
+.eq-mark{display:inline-block;transform:translateY(-1px);font-weight:700;margin:0 2px}
+.simplified-single{display:inline-grid;align-items:center;height:51px}
+.single-eq{width:92px;margin-left:0}

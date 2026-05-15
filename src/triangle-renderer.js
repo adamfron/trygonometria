@@ -26,8 +26,13 @@ export function renderTriangle(el,onSideClick){
 
  const arcR=24, aArc=drawInteriorArc(A,C,B,arcR), bArc=drawInteriorArc(B,A,C,arcR);
  const uCA=unitVector(C,A),uCB=unitVector(C,B),sq=18,p1=add(C,mul(uCA,sq)),p2=add(C,mul(uCB,sq)),p3=add(p1,mul(uCB,sq));
+ const toG=norm(sub(G,C));
+ const perp={x:-toG.y,y:toG.x};
+ const gPos=add(add(C,mul(toG,30)),mul(perp,6));
+ const gammaLabel=`<text text-anchor='${anchorFor(clamp(gPos.x,M+4,W-M-4),W/2)}' x='${clamp(gPos.x,M+4,W-M-4)}' y='${clamp(gPos.y,M+12,H-M)}' fill='var(--gamma)'>γ / 90°</text>`;
 
- el.innerHTML=`${vertexLabel('A',A)}${vertexLabel('B',B)}${vertexLabel('C',C)}${sideLabel('a',B,C,sideVal('a'),'var(--side-a)')}${sideLabel('b',A,C,sideVal('b'),'var(--side-b)')}${sideLabel('c',A,B,sideVal('c'),'var(--side-c)',24)}<path d='${aArc}' stroke='var(--alpha)' stroke-width='2.2' fill='none'/>${angleLabel(A,C,B,arcR,'α',14,'var(--alpha)')}<path d='${bArc}' stroke='var(--beta)' stroke-width='2.2' fill='none'/>${angleLabel(B,A,C,arcR,'β',14,'var(--beta)')}<polyline points='${p1.x},${p1.y} ${p3.x},${p3.y} ${p2.x},${p2.y}' fill='none' stroke='var(--gamma)' stroke-width='2'/>${angleLabel(C,A,B,arcR,'γ / 90°',16,'var(--gamma)')}`;
+
+ el.innerHTML=`${vertexLabel('A',A)}${vertexLabel('B',B)}${vertexLabel('C',C)}${sideLabel('a',B,C,sideVal('a'),'var(--side-a)')}${sideLabel('b',A,C,sideVal('b'),'var(--side-b)')}${sideLabel('c',A,B,sideVal('c'),'var(--side-c)',24)}<path d='${aArc}' stroke='var(--alpha)' stroke-width='2.2' fill='none'/>${angleLabel(A,C,B,arcR,'α',14,'var(--alpha)')}<path d='${bArc}' stroke='var(--beta)' stroke-width='2.2' fill='none'/>${angleLabel(B,A,C,arcR,'β',14,'var(--beta)')}<polyline points='${p1.x},${p1.y} ${p3.x},${p3.y} ${p2.x},${p2.y}' fill='none' stroke='var(--gamma)' stroke-width='2'/>${gammaLabel}`;
 
  el.querySelectorAll('[data-side]').forEach(n=>{n.onmouseenter=()=>n.classList.add('side-hover');n.onmouseleave=()=>n.classList.remove('side-hover');n.onclick=()=>onSideClick(n.dataset.side);});
 }
