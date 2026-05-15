@@ -1,27 +1,52 @@
-import {state,modes} from './state.js';
-import {rows,checkAnswer} from './answer-checker.js';
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trener trygonometrii — trójkąt prostokątny</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="title">
+        <h1>Trener trygonometrii</h1>
+        <p>Rozpoznaj boki względem kąta: przeciwległy, przyległy, przeciwprostokątna.</p>
+      </div>
+      <div class="stats" id="stats"></div>
+    </header>
+    <div class="mode-menu" id="modeMenu"></div>
 
-const labels={sinA:'sin α',cosA:'cos α',tanA:'tg α',sinB:'sin β',cosB:'cos β',tanB:'tg β'};
-const sideMap={sinA:['a','c'],cosA:['b','c'],tanA:['a','b'],sinB:['b','c'],cosB:['a','c'],tanB:['b','a']};
-export function renderModes(el,on){el.innerHTML=modes.map(([k,l])=>`<button data-mode='${k}' class='${state.mode===k?'active':''}'>${l}</button>`).join('');el.querySelectorAll('button').forEach(b=>b.onclick=()=>on(b.dataset.mode));}
+    <main class="layout">
+      <section class="panel triangle-panel">
+        <div class="panel-top">
+          <h2 class="panel-title" id="taskTitle">Trójkąt prostokątny — uzupełnij wartości funkcji dla α i β.</h2>
+        </div>
 
-export function renderAnswers(el){
- const t=state.task; let html='';
- html+=`<p class='gamma-note'>Dla γ = 90°: sin γ = 1, cos γ = 0, tg γ nie istnieje.</p>`;
- if(state.mode==='relation') html+=`<ol class='relation-steps'><li>Przyjmij b = x.</li><li>k to współczynnik skali, czyli informacja, ile razy jeden bok jest dłuższy lub krótszy od drugiego.</li><li>Skoro a = k·b, to a = kx.</li><li>Z twierdzenia Pitagorasa: c = √(a² + b²).</li><li>Po podstawieniu: c = √((kx)² + x²).</li><li>Wyłącz x przed pierwiastek i skróć x w ułamkach.</li><li>Wpisz końcowe wartości funkcji trygonometrycznych.</li></ol>`;
- if(state.mode==='pyth'&&!state.pythSolved) html+=`<div class='answer-row'><b>Brakujący bok ${t.hidden}</b> <input id='missingSide'></div><div>Wyprowadzenie: ${t.hidden==='c'?'c=√(a²+b²)':t.hidden==='a'?'a=√(c²-b²)':'b=√(c²-a²)'}</div>`;
- if(state.mode!=='pyth'||state.pythSolved) html+=rows(t).map(r=>{
-   const left=`<span class='fraction'><input data-side='${sideMap[r.k][0]}' id='${r.k}-rn'><span class='bar'></span><input data-side='${sideMap[r.k][1]}' id='${r.k}-rd'></span>`;
-   const right=r.s.mode==='fraction'?`<span class='eq-mark'>=</span><span class='fraction'><input data-side='${sideMap[r.k][0]}' id='${r.k}-sn'><span class='bar'></span><input data-side='${sideMap[r.k][1]}' id='${r.k}-sd'></span>`:r.s.mode==='single'?`<span class='eq-mark'>=</span><span class='simplified-single'><input class='single-eq' id='${r.k}-s1'></span>`:'';
-   return `<div class='answer-row ${state.showColorHints?'show-hints':''}' data-row='${r.k}'><b>${labels[r.k]}</b> ${left} ${right}</div>`;
- }).join('');
- el.innerHTML=html;
-}
+        <div class="triangle-wrap"><svg id="triangleSvg" viewBox="0 0 680 440" role="img" aria-label="Trójkąt prostokątny"></svg></div>
+        <div class="message" id="message"></div>
+      </section>
 
-export function wireFocus(root){root.querySelectorAll('input').forEach(i=>{i.onfocus=()=>state.focusedInput=i;});const first=root.querySelector('#missingSide')||root.querySelector('input'); if(first){first.focus(); state.focusedInput=first;}}
-export function checkAll(){
- if(state.mode==='pyth'&&!state.pythSolved){const val=document.getElementById('missingSide')?.value;const target=state.task[state.task.hidden];const num=Number((val||'').replace(',','.'));const ok=Number.isFinite(num)&&Math.abs(num-target)<1e-4; if(ok)state.pythSolved=true; return {ok,rows:[]};}
- const result=rows(state.task).map(r=>({k:r.k,ok:checkAnswer(state.task,r.k,document.getElementById(`${r.k}-rn`)?.value,document.getElementById(`${r.k}-rd`)?.value,document.getElementById(`${r.k}-sn`)?.value,document.getElementById(`${r.k}-sd`)?.value,document.getElementById(`${r.k}-s1`)?.value)}));
- return {ok:result.every(x=>x.ok),rows:result};
-}
-export function paintResults(rowsRes){rowsRes.forEach(r=>{const row=document.querySelector(`[data-row='${r.k}']`);if(!row)return;row.classList.remove('correct-soft','invalid');row.classList.add(r.ok?'correct-soft':'invalid');});}
+      <section class="panel answers-panel">
+        <div><h2 class="panel-title">Odpowiedzi</h2><p class="hint-line" id="answersIntro"></p></div>
+        <div class="answers-scroll" id="answers"></div>
+        <div class="buttons">
+          <button class="secondary" id="sqrtBtn" type="button">√</button>
+          <button class="secondary" id="endBtn" type="button">Zakończ sesję</button>
+          <button id="checkBtn" type="button">Sprawdź</button>
+          <button class="good" id="nextBtn" type="button" hidden>Następne zadanie</button>
+        </div>
+      </section>
+
+      <section class="panel graphs-panel">
+        <div class="graphs-grid">
+          <div class="graph-card"><svg id="sinSvg" viewBox="0 0 420 150"></svg></div>
+          <div class="graph-card"><svg id="cosSvg" viewBox="0 0 420 150"></svg></div>
+          <div class="graph-card"><svg id="tanSvg" viewBox="0 0 420 150"></svg></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
