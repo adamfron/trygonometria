@@ -1,24 +1,52 @@
-:root {--bg:#f5f7fb;--panel:#fff;--ink:#182033;--muted:#647084;--accent:#2f6fed;--good:#15803d;--warn:#b45309;--bad:#b91c1c;--line:#d9e0ee;--soft:#eef3ff;--side-a:#18a058;--side-b:#e38b29;--side-c:#7c3aed;--alpha:#2563eb;--beta:#dc2626;--gamma:#475569;--shadow:0 14px 35px rgba(15,23,42,.10);--radius:22px}
-*{box-sizing:border-box} body{margin:0;height:100vh;overflow:hidden;font-family:system-ui;background:radial-gradient(circle at top left,#e9f0ff,transparent 34rem),var(--bg);color:var(--ink)}
-.app{height:100vh;display:grid;grid-template-rows:auto auto minmax(0,1fr);gap:8px;padding:8px} header{display:flex;justify-content:space-between;align-items:center;gap:16px;background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:9px 14px}
-.layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(300px,1fr);grid-template-rows:minmax(0,2.3fr) minmax(120px,.7fr);gap:8px;height:100%}.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-.triangle-panel{padding:10px;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:7px}.mode-menu{display:flex;gap:6px;flex-wrap:wrap;background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:14px;padding:6px 8px}.mode-menu button{padding:6px 9px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);box-shadow:none}.mode-menu button.active{background:var(--accent);color:#fff}
-.triangle-wrap{display:grid;place-items:center;min-height:0;background:linear-gradient(180deg,#fbfcff,#f5f7ff);border:1px solid var(--line);border-radius:18px}svg{max-width:100%;max-height:100%}
-.answers-panel{display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:10px;gap:8px}.answers-scroll{overflow:auto}.answer-row{border:1px solid var(--line);border-radius:14px;padding:7px 8px;margin-bottom:7px;background:#fff}.fraction{display:inline-grid;grid-template-rows:24px 3px 24px}.fraction .bar{background:#182033;opacity:.8}.fraction input{width:70px}
-input{height:28px;border:1px solid var(--line);border-radius:10px;text-align:center;font-weight:700}.input-focused{outline:2px solid var(--accent)} .expected-highlight{box-shadow:0 0 0 3px rgba(47,111,237,.15)}
-.buttons{display:flex;gap:7px;justify-content:flex-end;flex-wrap:wrap}button{appearance:none;border:0;border-radius:13px;padding:8px 12px;font-weight:800;cursor:pointer;background:var(--accent);color:#fff}.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}.good{background:var(--good)}
-.message{min-height:34px;padding:7px 10px;border:1px solid var(--line);border-radius:14px}.graphs-panel{grid-column:1/-1;padding:6px 8px 8px}.graphs-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;height:100%}.graph-card{border:1px solid var(--line);border-radius:14px;padding:2px;display:grid;align-items:stretch}.graph-card svg{width:100%;height:100%}
-.side-hot{cursor:pointer}.side-hover{filter:brightness(1.2);stroke-width:8!important}
-@media (max-width:950px){body{overflow:auto;height:auto}.layout{grid-template-columns:1fr;grid-template-rows:auto auto auto}.graphs-grid{grid-template-columns:1fr}}
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trener trygonometrii — trójkąt prostokątny</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="title">
+        <h1>Trener trygonometrii</h1>
+        <p>Rozpoznaj boki względem kąta: przeciwległy, przyległy, przeciwprostokątna.</p>
+      </div>
+      <div class="stats" id="stats"></div>
+    </header>
+    <div class="mode-menu" id="modeMenu"></div>
 
-.gamma-note{font-size:.92rem;color:#334155;margin:.2rem 0 .6rem}.relation-steps{margin:.3rem 0 .8rem 1.2rem;padding:0}.relation-steps li{margin:.25rem 0}.answer-row.correct-soft{background:#ecfdf3;border-color:#86efac}.answer-row.invalid{background:#fff1f2;border-color:#fda4af}
+    <main class="layout">
+      <section class="panel triangle-panel">
+        <div class="panel-top">
+          <h2 class="panel-title" id="taskTitle">Trójkąt prostokątny — uzupełnij wartości funkcji dla α i β.</h2>
+        </div>
 
-.answer-row.show-hints input[data-side="a"]{border-color:var(--side-a);box-shadow:0 0 0 1px color-mix(in srgb,var(--side-a) 35%,white)}
-.answer-row.show-hints input[data-side="b"]{border-color:var(--side-b);box-shadow:0 0 0 1px color-mix(in srgb,var(--side-b) 35%,white)}
-.answer-row.show-hints input[data-side="c"]{border-color:var(--side-c);box-shadow:0 0 0 1px color-mix(in srgb,var(--side-c) 35%,white)}
+        <div class="triangle-wrap"><svg id="triangleSvg" viewBox="0 0 680 440" role="img" aria-label="Trójkąt prostokątny"></svg></div>
+        <div class="message" id="message"></div>
+      </section>
 
-.single-eq{width:92px;vertical-align:middle;margin-left:4px}
+      <section class="panel answers-panel">
+        <div><h2 class="panel-title">Odpowiedzi</h2><p class="hint-line" id="answersIntro"></p></div>
+        <div class="answers-scroll" id="answers"></div>
+        <div class="buttons">
+          <button class="secondary" id="sqrtBtn" type="button">√</button>
+          <button class="secondary" id="endBtn" type="button">Zakończ sesję</button>
+          <button id="checkBtn" type="button">Sprawdź</button>
+          <button class="good" id="nextBtn" type="button" hidden>Następne zadanie</button>
+        </div>
+      </section>
 
-.eq-mark{display:inline-block;transform:translateY(-1px);font-weight:700;margin:0 2px}
-.simplified-single{display:inline-grid;align-items:center;height:51px}
-.single-eq{width:92px;margin-left:0}
+      <section class="panel graphs-panel">
+        <div class="graphs-grid">
+          <div class="graph-card"><svg id="sinSvg" viewBox="0 0 420 150"></svg></div>
+          <div class="graph-card"><svg id="cosSvg" viewBox="0 0 420 150"></svg></div>
+          <div class="graph-card"><svg id="tanSvg" viewBox="0 0 420 150"></svg></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

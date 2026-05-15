@@ -1,0 +1,19 @@
+const W=420,H=150,l=32,r=12,t=8,b=48;
+const xMin=-30,xMax=390,yMin=-1.3,yMax=1.3,yMinTan=-10,yMaxTan=10;
+const pxX=d=>l+((d-xMin)/(xMax-xMin))*(W-l-r);
+const pxY=(v,min,max)=>t+((max-v)/(max-min))*(H-t-b);
+const deg=x=>x*180/Math.PI;
+
+function axes(isTan=false){
+ const ymin=isTan?yMinTan:yMin,ymax=isTan?yMaxTan:yMax;
+ const yMarks=isTan?[-10,-5,0,5,10]:[-1,-0.5,0,0.5,1];
+ const xMarks=[0,90,180,270,360];
+ const vx=xMarks.map(x=>`<line x1='${pxX(x)}' y1='${t}' x2='${pxX(x)}' y2='${H-b}' stroke='#eef2f7'/><text x='${pxX(x)}' y='${H-22}' font-size='10' text-anchor='middle'>${x}°</text>`).join('');
+ const vy=yMarks.map(y=>`<line x1='${l}' y1='${pxY(y,ymin,ymax)}' x2='${W-r}' y2='${pxY(y,ymin,ymax)}' stroke='#eef2f7'/><text x='4' y='${pxY(y,ymin,ymax)+4}' font-size='10'>${y}</text>`).join('');
+ return `${vx}${vy}<line x1='${l}' y1='${pxY(0,ymin,ymax)}' x2='${W-r}' y2='${pxY(0,ymin,ymax)}' stroke='#c5cfdb'/><line x1='${l}' y1='${t}' x2='${l}' y2='${H-b}' stroke='#c5cfdb'/>`;
+}
+function path(fn,isTan=false){let d='',open=false;const ymin=isTan?yMinTan:yMin,ymax=isTan?yMaxTan:yMax;for(let dg=xMin;dg<=xMax;dg+=1){const x=dg*Math.PI/180;const y=fn(x);const nearAsy=isTan&&(Math.abs((dg-90)%180)<2);if(!Number.isFinite(y)||nearAsy||y<ymin||y>ymax){open=false;continue;}const p=`${pxX(dg)} ${pxY(y,ymin,ymax)}`;d+=open?` L ${p}`:` M ${p}`;open=true;}return d;}
+function markers(a,b,fn,color,isTan=false){const ymin=isTan?yMinTan:yMin,ymax=isTan?yMaxTan:yMax;return [['α',a],['β',b]].map(([lab,ang])=>{const y=fn(ang);if(!Number.isFinite(y)||y<ymin||y>ymax)return '';const xdg=deg(ang);return `<line x1='${pxX(xdg)}' y1='${t}' x2='${pxX(xdg)}' y2='${H-b}' stroke='#cbd5e1' stroke-dasharray='3 3'/><circle cx='${pxX(xdg)}' cy='${pxY(y,ymin,ymax)}' r='3' fill='${color}'/><text x='${pxX(xdg)+4}' y='${pxY(y,ymin,ymax)-6}' font-size='10'>${lab}: ${y.toFixed(2)}</text>`;}).join('');}
+function draw(svg,fn,color,a,beta,label,isTan=false){svg.innerHTML=`<rect width='${W}' height='${H}' fill='#fff'/>${axes(isTan)}${isTan?`<line x1='${pxX(90)}' y1='${t}' x2='${pxX(90)}' y2='${H-b}' stroke='#fda4af' stroke-dasharray='4 3'/><line x1='${pxX(270)}' y1='${t}' x2='${pxX(270)}' y2='${H-b}' stroke='#fda4af' stroke-dasharray='4 3'/>`:''}<path d='${path(fn,isTan)}' fill='none' stroke='${color}' stroke-width='2.1'/><text x='${W-r-52}' y='${t+10}' fill='${color}' font-size='12' font-weight='700'>${label}</text>${markers(a,beta,fn,color,isTan)}`;}
+
+export function renderGraphs(sinSvg,cosSvg,tanSvg,alpha,beta){draw(sinSvg,Math.sin,'#2563eb',alpha,beta,'sin(x)',false);draw(cosSvg,Math.cos,'#059669',alpha,beta,'cos(x)',false);draw(tanSvg,Math.tan,'#dc2626',alpha,beta,'tg(x)',true);}
