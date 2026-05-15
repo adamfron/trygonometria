@@ -15,14 +15,12 @@
       </div>
       <div class="stats" id="stats"></div>
     </header>
+    <div class="mode-menu" id="modeMenu"></div>
 
     <main class="layout">
       <section class="panel triangle-panel">
         <div class="panel-top">
-          <div>
-            <h2 class="panel-title" id="taskTitle">Trójkąt prostokątny</h2>
-            <p class="hint-line" id="taskSubtitle">Uzupełnij wartości funkcji dla kątów ostrych α i β.</p>
-          </div>
+          <h2 class="panel-title" id="taskTitle">Trójkąt prostokątny — uzupełnij wartości funkcji dla α i β.</h2>
           <div class="legend" id="legend">
             <span><i class="dot" style="background: var(--side-a)"></i> bok a</span>
             <span><i class="dot" style="background: var(--side-b)"></i> bok b</span>
@@ -30,19 +28,12 @@
           </div>
         </div>
 
-        <div class="mode-menu" id="modeMenu"></div>
-
-        <div class="triangle-wrap">
-          <svg id="triangleSvg" viewBox="0 0 680 440" role="img" aria-label="Trójkąt prostokątny"></svg>
-        </div>
-        <div class="message" id="message">Na początek wpisz ułamki wynikające bezpośrednio z długości boków.</div>
+        <div class="triangle-wrap"><svg id="triangleSvg" viewBox="0 0 680 440" role="img" aria-label="Trójkąt prostokątny"></svg></div>
+        <div class="message" id="message"></div>
       </section>
 
       <section class="panel answers-panel">
-        <div>
-          <h2 class="panel-title">Odpowiedzi</h2>
-          <p class="hint-line" id="answersIntro">Najpierw wpisz ułamek z boków, potem — jeśli trzeba — jego skróconą postać.</p>
-        </div>
+        <div><h2 class="panel-title">Odpowiedzi</h2><p class="hint-line" id="answersIntro"></p></div>
         <div class="answers-scroll" id="answers"></div>
         <div class="buttons">
           <button class="secondary" id="sqrtBtn" type="button">√</button>
@@ -53,7 +44,6 @@
       </section>
 
       <section class="panel graphs-panel">
-        <div class="graphs-head"><div><h2 class="panel-title">Wartości na wykresach</h2></div></div>
         <div class="graphs-grid">
           <div class="graph-card"><p class="graph-title">sin(x)</p><svg id="sinSvg" viewBox="0 0 420 150"></svg></div>
           <div class="graph-card"><p class="graph-title">cos(x)</p><svg id="cosSvg" viewBox="0 0 420 150"></svg></div>
@@ -62,7 +52,6 @@
       </section>
     </main>
   </div>
-
   <script type="module" src="src/app.js"></script>
 </body>
 </html>
